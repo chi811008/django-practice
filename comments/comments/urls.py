@@ -40,7 +40,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', user_view.UsersView.as_view()),
-    path('admin/api/comment/', include("comment.urls")),
+    path('api/comment/', include("comment.urls")),
 ]
 
 urlpatterns += [

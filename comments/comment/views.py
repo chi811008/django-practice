@@ -19,7 +19,7 @@ from comment.serializers import CommentSerializer
 #     json = JSONRenderer().render(serializer.data)
 #     return json
 
-@api_view(['Get'])
+@api_view(["Get"])
 def comment_list(request):
     comments = Comment.objects.all()
     serializer = CommentSerializer(comments, many=True)
@@ -31,6 +31,29 @@ def comment_detail(request, pk):
     serializer = CommentSerializer(comments, many=False)
     return Response(serializer.data)
 
+@api_view(["POST"])
+def comment_create(request):
+    serializer = CommentSerializer(data=request.query_params)
+
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def comment_update(request, pk):
+    comment = Comment.objects.get(id=pk)
+    serializer = CommentSerializer(instance=comment, data=request.data)
+
+    if serializer.is_valid():
+        with transaction.atomic():
+            serializer.save()
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+def comment_delete(request, pk):
+    comment = Comment.objects.get(id=pk)
+    comment.delete()
+    return Response('Deleted')
 # class CommentsView(GenericAPIView):
 #     def get(self, request, *args, **krgs):
 #         comment = Comment(email='leila@example.com', content='foo bar')
