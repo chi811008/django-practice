@@ -16,8 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
-from user import views as user_view
+from django.conf.urls.static import static
 
+from user import views as user_view
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -39,6 +40,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', user_view.UsersView.as_view()),
+    path('admin/api/comment/', include("comment.urls")),
 ]
 
 urlpatterns += [

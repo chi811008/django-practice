@@ -7,6 +7,7 @@ from rest_framework.generics import GenericAPIView
 from user.serializers import UserSerializer 
 from user.models import User
 
+# rest_framework api 
 class UsersView(GenericAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
